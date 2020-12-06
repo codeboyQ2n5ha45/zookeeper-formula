@@ -4,12 +4,23 @@
 zookeeper:
   pkg:
     name: zookeeper
+    downloadurl: >
+      https://mirror.csclub.uwaterloo.ca/apache/zookeeper/zookeeper-3.6.2/apache-zookeeper-3.6.2-bin.tar.gz
+    version: 3.6.2
+    installdir: /opt
+
+    # OpenJDK package name on system; defaults to an empty string, which avoids
+    # installing OpenJDK.  Overridden in the `os*map.yaml` files.
+    javajdk: ''
+
+  systemdconfig:
+    user: root
+    group: root
+    limitnofile: 50000
+    limitnproc: 10000
+
   rootgroup: root
-  config: '/etc/zookeeper'
+  config: 'zookeeper.properties'
   service:
     name: zookeeper
-  subcomponent:
-    config: '/etc/zookeeper-subcomponent-formula.conf'
-  # Just here for testing
-  added_in_defaults: defaults_value
-  winner: defaults
+

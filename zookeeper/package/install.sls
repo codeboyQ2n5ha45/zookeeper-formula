@@ -21,4 +21,4 @@ zookeeper-package-install-pkg-installed:
     - options: "--strip-components=1"
     - enforce_toplevel: False
     - require:
-      - pkg: zookeeper-package-install-dependency-tar
+      - pkg: zookeeper-dependency-install-pkg-installed

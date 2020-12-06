@@ -12,12 +12,12 @@
 ---
 Debian:
   pkg:
-    name: zookeeper-debian
+    javajdk: 'openjdk-11-jdk'
   config: /etc/zookeeper.d/custom.conf
 
 RedHat:
   pkg:
-    name: zookeeper-redhat
+    javajdk: 'java-11-openjdk'
   config: /etc/zookeeper.conf
 
 Suse:
