@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+zookeeper:
+  pkg:
+    name: zookeeper
+  rootgroup: root
+  config: '/etc/zookeeper'
+  service:
+    name: zookeeper
+  subcomponent:
+    config: '/etc/zookeeper-subcomponent-formula.conf'
+  # Just here for testing
+  added_in_defaults: defaults_value
+  winner: defaults
