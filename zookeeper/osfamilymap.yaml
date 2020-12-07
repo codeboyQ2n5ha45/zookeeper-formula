@@ -13,12 +13,10 @@
 Debian:
   pkg:
     javajdk: 'openjdk-11-jdk'
-  config: /etc/zookeeper.d/custom.conf
 
 RedHat:
   pkg:
     javajdk: 'java-11-openjdk'
-  config: /etc/zookeeper.conf
 
 Suse:
   pkg:

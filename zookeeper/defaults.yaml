@@ -20,7 +20,15 @@ zookeeper:
     limitnproc: 10000
 
   rootgroup: root
-  config: 'zookeeper.properties'
+  config: 'zoo.cfg'
   service:
     name: zookeeper
 
+  zookeeperproperties:
+    tickTime: 2000
+    dataDir: ./state/zookeeper
+    clientPort: 2181
+    initLimit: 5
+    syncLimit: 2
+
+    customservers: ''

@@ -12,8 +12,8 @@ include:
 
 zookeeper-config-file-file-managed:
   file.managed:
-    - name: {{ zookeeper.config }}
-    - source: {{ files_switch(['example.tmpl'],
+    - name: {{ zookeeper.pkg.installdir }}/zookeeper-{{ zookeeper.pkg.version }}/conf/zoo.cfg
+    - source: {{ files_switch(['zoo.tmpl.jinja'],
                               lookup='zookeeper-config-file-file-managed'
                  )
               }}
@@ -26,3 +26,23 @@ zookeeper-config-file-file-managed:
       - sls: {{ sls_package_install }}
     - context:
         zookeeper: {{ zookeeper | json }}
+
+{% if zookeeper.zookeeperproperties['customservers'] %}
+zookeeper-zookeepermyid-file-file-managed:
+  file.managed:
+    - name: {{ zookeeper.pkg.installdir }}/zookeeper-{{ zookeeper.pkg.version }}/{{ zookeeper.zookeeperproperties.dataDir | regex_replace('[(.*?)]','') }}/myid
+    - source: {{ files_switch(['zookeepermyid.tmpl.jinja'],
+                              lookup='zookeeper-zookeepermyid-file-file-managed'
+                 )
+              }}
+    - mode: 644
+    - user: {{ zookeeper.systemdconfig.user }}
+    - group: {{ zookeeper.systemdconfig.group }}
+    - makedirs: True
+    - template: jinja
+    - require:
+      - sls: {{ sls_package_install }}
+    - context:
+        zookeeper: {{ zookeeper | json }}
+
+{% endif %}
