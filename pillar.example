@@ -2,56 +2,49 @@
 # vim: ft=yaml
 ---
 zookeeper:
-  lookup:
-    master: template-master
-    # Just for testing purposes
-    winner: lookup
-    added_in_lookup: lookup_value
-
-  # Using bash package and udev service as an example. This allows us to
-  # test the template formula itself. You should set these parameters to
-  # examples that make sense in the contexto of the formula you're writing.
   pkg:
-    name: bash
+    name: zookeeper
+    downloadurl: >
+      https://mirror.csclub.uwaterloo.ca/apache/zookeeper/zookeeper-3.6.2/apache-zookeeper-3.6.2-bin.tar.gz
+    version: 3.6.2
+    installdir: /opt
+
+    # OpenJDK package name on system; defaults to an empty string, which avoids
+    # installing OpenJDK.  Overridden in the `os*map.yaml` files.
+    javajdk: ''
+
+  systemdconfig:
+    user: root
+    group: root
+    limitnofile: 50000
+    limitnproc: 10000
+
+  rootgroup: root
+  config: 'zoo.cfg'
   service:
-    name: systemd-journald
-  config: /etc/template-formula.conf
+    name: zookeeper
 
-  tofs:
-    # The files_switch key serves as a selector for alternative
-    # directories under the formula files directory. See TOFS pattern
-    # doc for more info.
-    # Note: Any value not evaluated by `config.get` will be used literally.
-    # This can be used to set custom paths, as many levels deep as required.
-    files_switch:
-      - any/path/can/be/used/here
-      - id
-      - roles
-      - osfinger
-      - os
-      - os_family
-    # All aspects of path/file resolution are customisable using the options below.
-    # This is unnecessary in most cases; there are sensible defaults.
-    # Default path: salt://< path_prefix >/< dirs.files >/< dirs.default >
-    #         I.e.: salt://zookeeper/files/default
-    # path_prefix: template_alt
-    # dirs:
-    #   files: files_alt
-    #   default: default_alt
-    # The entries under `source_files` are prepended to the default source files
-    # given for the state
-    # source_files:
-    #   zookeeper-config-file-file-managed:
-    #     - 'example_alt.tmpl'
-    #     - 'example_alt.tmpl.jinja'
+  zookeeperproperties:
+    tickTime: 2000
+    dataDir: ./state/zookeeper
+    clientPort: 2181
+    initLimit: 5
+    syncLimit: 2
 
-    # For testing purposes
-    source_files:
-      zookeeper-config-file-file-managed:
-        - 'example.tmpl.jinja'
-      zookeeper-subcomponent-config-file-file-managed:
-        - 'subcomponent-example.tmpl.jinja'
+    customservers:
+      Node1:
+        hostname: nifi-01.localdomain
+        zookeeper_myid: 1
+        zookeeper_clientPort: 2181
+        zookeeper_peerPorts: '2888:3888'
+      Node2:
+        hostname: nifi-02.localdomain
+        zookeeper_myid: 2
+        zookeeper_clientPort: 2181
+        zookeeper_peerPorts: '2888:3888'
+      Node3:
+        hostname: nifi-03.localdomain
+        zookeeper_myid: 3
+        zookeeper_clientPort: 2181
+        zookeeper_peerPorts: '2888:3888'
 
-  # Just for testing purposes
-  winner: pillar
-  added_in_pillar: pillar_value
