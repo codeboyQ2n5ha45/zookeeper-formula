@@ -3,6 +3,8 @@
 zookeeper-formula
 ================
 
+Installs and Configures Apache Zookeeper from from a tar file.
+
 |img_travis| |img_sr| |img_pc|
 
 .. |img_travis| image:: https://travis-ci.com/saltstack-formulas/zookeeper-formula.svg?branch=master
@@ -124,28 +126,6 @@ dependency on ``zookeeper.service.clean`` via include list.
 
 This state will remove the zookeeper package and has a depency on
 ``zookeeper.config.clean`` via include list.
-
-``zookeeper.subcomponent``
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-*Meta-state (This is a state that includes other states)*.
-
-This state installs a subcomponent configuration file before
-configuring and starting the zookeeper service.
-
-``zookeeper.subcomponent.config``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state will configure the zookeeper subcomponent and has a
-dependency on ``zookeeper.config`` via include list.
-
-``zookeeper.subcomponent.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state will remove the configuration of the zookeeper subcomponent
-and reload the zookeeper service by a dependency on
-``zookeeper.service.running`` via include list and ``watch_in``
-requisite.
 
 Testing
 -------
